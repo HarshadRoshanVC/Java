@@ -1,0 +1,85 @@
+//Prey.java
+public class Prey{
+int curentPopulation;
+double BirthRate;
+double PreyRate;
+public Prey(int Population,double BirthRate,double PreyRate){
+this.curentPopulation=Population;
+this.BirthRate=BirthRate;
+this.PreyRate=PreyRate;
+}
+/**
+*getCurrentPopulation() method returns the curent Population
+* of prey. It return an integer value
+* */
+public int getCurrentPopulation(){
+return this.curentPopulation;
+}
+/**
+* This method is used to update prey population using the
+* this.curentPopulation=curentPopulation*(1+this.BirthRate-this.PreyRate*predetorPopulation);
+* this method returns nothing
+* */
+public void updatePreyPopulation(int predetorPopulation){
+this.curentPopulation=(int)(curentPopulation * (1+this.BirthRate-this.PreyRate*predetorPopulation));
+}
+}
+
+//Predator.java
+
+public class Predator{
+int curentPopulation;
+double DeathRate;
+double IncRate;
+public Predator(int curentPopulation,double DeathRate,double IncRate){
+this.curentPopulation=curentPopulation;
+this.DeathRate=DeathRate;
+this.IncRate=IncRate;
+}
+/**
+* This method is used to update predator population using the
+*this.curentPopulation=this.curentPopulation*(1-this.DeathRate+this.IncRate*preyPopulation);
+* this method returns nothing
+* */
+public void updatePredatorPopulation(int preyPopulation){
+this.curentPopulation=(int)(this.curentPopulation*(1-this.DeathRate+this.IncRate*preyPopulation));
+}
+  
+/**
+*getCurrentPopulation() method returns the curent Population
+* of predator. It return an integer value
+* */
+public int getCurrentPopulation(){
+return this.curentPopulation;
+}
+}
+
+//PredatorPreySimulation.java
+
+import java.util.Scanner;
+public class PredatorPreySimulation
+{
+  
+   public static void main(String[] args) {
+   final double preyBirth=0.1,predationRate=0.01,predatorDeath=0.01,predatorRate=0.00002;
+   int preyPopulation,predatorPopulation,period;
+   Prey prey1;
+   Predator predator1;
+       Scanner sc=new Scanner(System.in);
+       System.out.print("Enter starting Population of rabbit prey:");
+       preyPopulation=sc.nextInt();
+       prey1=new Prey(preyPopulation,preyBirth,predationRate);
+       System.out.print("Enter starting Population of fox predator:");
+       predatorPopulation=sc.nextInt();
+       predator1=new Predator(predatorPopulation,predatorDeath,predatorRate);
+       System.out.print("Enter number of periods:");
+       period = sc.nextInt();
+       for(int iter=0;iter<period ;iter++){
+       System.out.println("At "+iter+" period, the prey population is "+prey1.getCurrentPopulation()+" and the predator population is "+predator1.getCurrentPopulation());
+       prey1.updatePreyPopulation(predator1.getCurrentPopulation());
+       predator1.updatePredatorPopulation(prey1.getCurrentPopulation());
+       }
+       sc.close();
+   }
+}
+
