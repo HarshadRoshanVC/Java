@@ -1,0 +1,133 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+class Movie{
+    int movieId;
+    int rating;
+    int budget;
+    String director;
+    
+    public Movie(){}
+ 
+    public Movie(int movieId,String director,int rating,int budget){
+        this.movieId=movieId;
+        this.director=director;
+        this.rating=rating;
+        this.budget=budget;
+    }
+
+    public int getMovieID(){
+        return this.movieId;
+    }
+
+    public int getRating(){
+        return this.rating;
+    }
+
+    public int getBudget(){
+        return this.budget;
+    }
+
+    public String getDirector(){
+        return this.director;
+    }
+
+    public void setMovieId(int movieId){
+        this.movieId=movieId;
+    }
+
+    public void setDirector(String director){
+        this.director=director;
+    }
+
+    public void setRating(int rating){
+        this.rating=rating;
+    }
+
+    public void setBudget(int budget){
+        this.budget=budget;
+    }
+}
+
+public class Solution {
+   public static void main(String[] args)
+    {
+        //code to read values 
+        //code to call required method
+        //code to display the result
+        Scanner sc=new Scanner(System.in);
+        Movie movies[]=new Movie[4];
+        
+        int rating,budget,movieId,avgBudget;
+        String director;
+        for(int i=0;i<4;i++){
+            movieId=sc.nextInt();
+            sc.nextLine();
+            director=sc.nextLine();
+            rating=sc.nextInt();
+            budget=sc.nextInt();
+            movies[i]=new Movie(movieId,director,rating,budget);
+        }
+        sc.nextLine();
+        director=sc.nextLine();
+        rating=sc.nextInt();
+        budget=sc.nextInt();
+        
+        avgBudget=findAvgBudgetByDirector(movies, director);
+        if(avgBudget!=0){
+            System.out.println(avgBudget);
+        }else{
+            System.out.println("Sorry - The given director has not yet directed any movie");
+        }
+
+        Movie result=getMovieByRatingBudget(movies, rating, budget);
+        if(result!=null){
+            System.out.println(result.getMovieID());
+        }else{
+            System.out.println("Sorry - No movie is available with the specified rating and budget requirement");
+        }
+
+
+    }
+
+    public static int findAvgBudgetByDirector (Movie[] movies, String director)
+      {
+          //method logic
+          int avgBudget=0,count=0;
+          for(Movie movie: movies){
+              if(director.equalsIgnoreCase(movie.getDirector())){
+                  avgBudget+=movie.getBudget();
+                  count++;
+              }
+          }
+          if(count==0){
+              return 0;
+          }else{
+            avgBudget= (int) (avgBudget/count);
+            return avgBudget;
+          }
+          
+      }
+
+    public static Movie getMovieByRatingBudget(Movie[] movies, int rating, int budget)
+      {
+          //method logic
+          Movie result=new Movie();
+          for(Movie movie: movies){
+              if(movie.getRating()==rating && movie.getBudget()==budget){
+                  if(budget % rating == 0){
+                      result=movie;
+                      return result;
+                  }
+              }
+          }
+          
+              return null;
+         
+      }
+}
+
+
